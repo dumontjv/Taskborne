@@ -1044,5 +1044,305 @@
     if (p) p.style.display = 'none';
   }, 8000);
 </script>
+ <!-- SUPPORT AGENT WIDGET -->
+<style>
+  .nova-btn {
+    position: fixed;
+    bottom: 28px; right: 104px;
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: #1a1a2e;
+    border: none;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 24px rgba(14,14,14,0.25);
+    z-index: 9999;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .nova-btn:hover { transform: scale(1.08); box-shadow: 0 8px 32px rgba(14,14,14,0.3); }
+  .nova-btn svg { width: 26px; height: 26px; }
+  .nova-btn .nova-close { display: none; }
+  .nova-btn.open .nova-icon { display: none; }
+  .nova-btn.open .nova-close { display: block; }
+
+  .nova-window {
+    position: fixed;
+    bottom: 104px; right: 104px;
+    width: 360px; height: 520px;
+    background: #f5f2ec;
+    border-radius: 16px;
+    box-shadow: 0 16px 64px rgba(14,14,14,0.18);
+    z-index: 9999;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    opacity: 0; pointer-events: none;
+    transform: translateY(16px) scale(0.97);
+    transition: opacity 0.22s, transform 0.22s;
+  }
+  .nova-window.open {
+    opacity: 1; pointer-events: all;
+    transform: translateY(0) scale(1);
+  }
+
+  .nova-header {
+    background: #1a1a2e;
+    padding: 16px 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .nova-avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4a90d9, #1a3a6e);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .nova-header-info { flex: 1; }
+  .nova-header-name {
+    font-size: 14px; font-weight: 500;
+    color: #f5f2ec; letter-spacing: 0.01em;
+  }
+  .nova-header-status {
+    font-size: 11px; color: rgba(245,242,236,0.5);
+    display: flex; align-items: center; gap: 4px; margin-top: 1px;
+  }
+  .nova-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #4caf50;
+    animation: novaBlink 2s infinite;
+  }
+  @keyframes novaBlink {
+    0%, 100% { opacity: 1; } 50% { opacity: 0.4; }
+  }
+
+  .nova-messages {
+    flex: 1; overflow-y: auto;
+    padding: 16px;
+    display: flex; flex-direction: column; gap: 10px;
+    scroll-behavior: smooth;
+  }
+  .nova-messages::-webkit-scrollbar { width: 4px; }
+  .nova-messages::-webkit-scrollbar-thumb { background: rgba(14,14,14,0.15); border-radius: 2px; }
+
+  .nova-msg {
+    max-width: 82%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    animation: novaMsgIn 0.2s ease;
+  }
+  @keyframes novaMsgIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .nova-msg.bot {
+    background: #fff; color: #0e0e0e;
+    border-bottom-left-radius: 4px;
+    align-self: flex-start;
+    border: 0.5px solid rgba(14,14,14,0.08);
+  }
+  .nova-msg.user {
+    background: #1a1a2e; color: #f5f2ec;
+    border-bottom-right-radius: 4px;
+    align-self: flex-end;
+  }
+  .nova-typing {
+    display: flex; gap: 4px; align-items: center;
+    padding: 12px 14px;
+    background: #fff;
+    border-radius: 12px; border-bottom-left-radius: 4px;
+    align-self: flex-start;
+    border: 0.5px solid rgba(14,14,14,0.08);
+  }
+  .nova-typing span {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #4a90d9;
+    animation: novaTyping 1.2s infinite;
+  }
+  .nova-typing span:nth-child(2) { animation-delay: 0.2s; }
+  .nova-typing span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes novaTyping {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30% { transform: translateY(-5px); opacity: 1; }
+  }
+
+  .nova-footer {
+    padding: 12px 14px;
+    background: #edeae2;
+    border-top: 0.5px solid rgba(14,14,14,0.08);
+    display: flex; gap: 8px; align-items: flex-end;
+  }
+  .nova-input {
+    flex: 1;
+    border: 0.5px solid rgba(14,14,14,0.15);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+    background: #fff; color: #0e0e0e;
+    resize: none; outline: none;
+    max-height: 100px; min-height: 40px;
+    line-height: 1.4;
+    transition: border-color 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .nova-input:focus { border-color: #4a90d9; }
+  .nova-input::placeholder { color: rgba(14,14,14,0.35); }
+  .nova-send {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: #1a1a2e;
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .nova-send:hover { background: #0e0e0e; transform: scale(1.05); }
+  .nova-send:active { transform: scale(0.97); }
+  .nova-send svg { width: 16px; height: 16px; }
+
+  .nova-powered {
+    text-align: center; font-size: 10px;
+    color: rgba(14,14,14,0.3);
+    padding: 6px; background: #edeae2;
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 420px) {
+    .nova-window { width: calc(100vw - 24px); right: 12px; bottom: 88px; }
+    .nova-btn { right: 84px; bottom: 12px; }
+  }
+</style>
+
+<div class="nova-widget">
+  <button class="nova-btn" id="novaBtn" onclick="toggleNova()">
+    <svg class="nova-icon" viewBox="0 0 24 24" fill="none" stroke="#f5f2ec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+      <line x1="12" y1="17" x2="12.01" y2="17"/>
+    </svg>
+    <svg class="nova-close" viewBox="0 0 24 24" fill="none" stroke="#f5f2ec" stroke-width="2" stroke-linecap="round">
+      <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </button>
+
+  <div class="nova-window" id="novaWindow">
+    <div class="nova-header">
+      <div class="nova-avatar">💬</div>
+      <div class="nova-header-info">
+        <div class="nova-header-name">Nova — Support AI</div>
+        <div class="nova-header-status">
+          <div class="nova-dot"></div>
+          Always available
+        </div>
+      </div>
+    </div>
+
+    <div class="nova-messages" id="novaMessages"></div>
+
+    <div class="nova-footer">
+      <textarea class="nova-input" id="novaInput" placeholder="Ask me anything..." rows="1"
+        onkeydown="handleNovaKey(event)" oninput="novaResize(this)"></textarea>
+      <button class="nova-send" onclick="sendNovaMessage()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#f5f2ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+    <div class="nova-powered">Powered by Taskborne AI</div>
+  </div>
+</div>
+
+<script>
+  const NOVA_WEBHOOK = 'https://dumontjv.app.n8n.cloud/webhook/support-agent';
+  let novaOpen = false;
+  let novaHistory = [];
+  let novaSessionId = 'session_' + Math.random().toString(36).substr(2, 9);
+  let novaStarted = false;
+
+  function toggleNova() {
+    novaOpen = !novaOpen;
+    document.getElementById('novaBtn').classList.toggle('open', novaOpen);
+    document.getElementById('novaWindow').classList.toggle('open', novaOpen);
+    if (novaOpen && !novaStarted) {
+      novaStarted = true;
+      setTimeout(() => addNovaMessage('bot', "Hi! 👋 I'm Nova, your support assistant.\n\nI can answer questions about our services, pricing, and how everything works. What would you like to know?"), 600);
+    }
+    if (novaOpen) setTimeout(() => document.getElementById('novaInput').focus(), 300);
+  }
+
+  function addNovaMessage(type, text) {
+    const msgs = document.getElementById('novaMessages');
+    const div = document.createElement('div');
+    div.className = 'nova-msg ' + type;
+    div.textContent = text;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+    return div;
+  }
+
+  function showNovaTyping() {
+    const msgs = document.getElementById('novaMessages');
+    const div = document.createElement('div');
+    div.className = 'nova-typing';
+    div.id = 'novaTyping';
+    div.innerHTML = '<span></span><span></span><span></span>';
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function hideNovaTyping() {
+    const t = document.getElementById('novaTyping');
+    if (t) t.remove();
+  }
+
+  async function sendNovaMessage() {
+    const input = document.getElementById('novaInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    addNovaMessage('user', text);
+    input.value = '';
+    input.style.height = 'auto';
+    showNovaTyping();
+
+    novaHistory.push({ role: 'user', content: text });
+
+    try {
+      const res = await fetch(NOVA_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sessionId: novaSessionId,
+          message: text,
+          name: 'Visitor',
+          history: novaHistory
+        })
+      });
+
+      const data = await res.json();
+      hideNovaTyping();
+
+      const reply = data.response || "I'm here to help! Could you tell me a bit more?";
+      addNovaMessage('bot', reply);
+      novaHistory.push({ role: 'assistant', content: reply });
+
+    } catch (e) {
+      hideNovaTyping();
+      addNovaMessage('bot', "Sorry, I'm having a connection issue. Please try again in a moment!");
+    }
+  }
+
+  function handleNovaKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendNovaMessage();
+    }
+  }
+
+  function novaResize(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+  }
+</script>
 </body>
 </html>
