@@ -130,38 +130,44 @@ footer a:hover { color: var(--gold); }
   .proof-bar { padding: 1rem 1.5rem; gap: 1.5rem; }
   footer { padding: 2rem 1.5rem; flex-direction: column; text-align: center; }
 }
+
 /* === SCROLL REVEAL TRANSITIONS === */
-.reveal {
-  opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+.reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
 .reveal-delay-1 { transition-delay: 0.1s; }
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
 .reveal-delay-4 { transition-delay: 0.4s; }
-.reveal-left {
-  opacity: 0;
-  transform: translateX(-24px);
-  transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
-}
+.reveal-left { opacity: 0; transform: translateX(-24px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
 .reveal-left.visible { opacity: 1; transform: translateX(0); }
-.reveal-right {
-  opacity: 0;
-  transform: translateX(24px);
-  transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
-}
+.reveal-right { opacity: 0; transform: translateX(24px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
 .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+/* === AGENT BUTTON WRAPPERS + LABELS === */
+.agent-wrapper {
+  position: fixed;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  z-index: 10000;
+}
+.agent-wrapper.aria-wrap { bottom: 28px; right: 28px; }
+.agent-wrapper.nova-wrap { bottom: 28px; right: 104px; }
+.agent-wrapper.rex-wrap  { bottom: 28px; right: 180px; }
+.agent-label {
+  font-size: 10px; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(245,242,236,0.5);
+  opacity: 0; transform: translateY(4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  white-space: nowrap; pointer-events: none;
+  font-family: 'DM Sans', sans-serif;
+  order: -1;
+}
+.agent-wrapper:hover .agent-label { opacity: 1; transform: translateY(0); }
 </style>
 </head>
 <body>
 <nav>
   <a href="#" class="nav-logo" style="display:flex; align-items:center; gap:10px; text-decoration:none;">
-    <img src="/taskborne-favicon-32.svg" alt="" style="height:28px; width:28px;">
+    <img src="/taskborne-logo.svg" alt="" style="height:22px; width:auto; filter:brightness(10);">
     <span style="color:var(--ink); font-family:var(--serif); font-size:1.35rem; letter-spacing:-0.01em;"><span style="color:var(--ink); font-weight:500;">Task</span><span style="color:var(--gold)">borne</span></span>
   </a>
   <ul class="nav-links">
@@ -223,31 +229,19 @@ footer a:hover { color: var(--gold); }
       <div class="service-num">01</div>
       <h3>Scheduling &amp; Triage Agent</h3>
       <p>Your AI receptionist never sleeps. It books appointments, sends confirmations, asks intake questions, and escalates urgent cases — all via SMS or your website chat.</p>
-      <div class="service-tags">
-        <span class="tag">SMS / Web chat</span>
-        <span class="tag">Google Calendar</span>
-        <span class="tag">Auto reminders</span>
-      </div>
+      <div class="service-tags"><span class="tag">SMS / Web chat</span><span class="tag">Google Calendar</span><span class="tag">Auto reminders</span></div>
     </div>
     <div class="service-card reveal reveal-delay-2">
       <div class="service-num">02</div>
       <h3>24/7 Customer Support Agent</h3>
       <p>Answers FAQs, handles common requests, and knows exactly when to hand off to a human — with full context. Trained on your business, your policies, your voice.</p>
-      <div class="service-tags">
-        <span class="tag">Custom knowledge base</span>
-        <span class="tag">Smart escalation</span>
-        <span class="tag">Multi-channel</span>
-      </div>
+      <div class="service-tags"><span class="tag">Custom knowledge base</span><span class="tag">Smart escalation</span><span class="tag">Multi-channel</span></div>
     </div>
     <div class="service-card reveal reveal-delay-3">
       <div class="service-num">03</div>
       <h3>Lead Qualification Agent</h3>
       <p>Engages every inbound lead instantly, asks the right qualifying questions, scores them, and sends only the hot ones to you — with a full summary ready to act on.</p>
-      <div class="service-tags">
-        <span class="tag">Lead scoring</span>
-        <span class="tag">Auto follow-up</span>
-        <span class="tag">CRM ready</span>
-      </div>
+      <div class="service-tags"><span class="tag">Lead scoring</span><span class="tag">Auto follow-up</span><span class="tag">CRM ready</span></div>
     </div>
   </div>
 </section>
@@ -275,11 +269,7 @@ footer a:hover { color: var(--gold); }
       <div class="pricing-price">$297</div>
       <div class="pricing-period">/ month + $997 setup</div>
       <ul class="pricing-features">
-        <li>1 AI agent of your choice</li>
-        <li>SMS or web chat integration</li>
-        <li>Google Calendar sync</li>
-        <li>Monthly performance report</li>
-        <li>Email support</li>
+        <li>1 AI agent of your choice</li><li>SMS or web chat integration</li><li>Google Calendar sync</li><li>Monthly performance report</li><li>Email support</li>
       </ul>
       <a href="#contact" class="btn-outline">Get started</a>
     </div>
@@ -290,12 +280,7 @@ footer a:hover { color: var(--gold); }
       <div class="pricing-price">$497</div>
       <div class="pricing-period">/ month + $1,497 setup</div>
       <ul class="pricing-features">
-        <li>2 AI agents (your choice)</li>
-        <li>All channels included</li>
-        <li>CRM / Sheets integration</li>
-        <li>Bi-weekly optimization</li>
-        <li>Priority support</li>
-        <li>Custom knowledge base</li>
+        <li>2 AI agents (your choice)</li><li>All channels included</li><li>CRM / Sheets integration</li><li>Bi-weekly optimization</li><li>Priority support</li><li>Custom knowledge base</li>
       </ul>
       <a href="#contact" class="btn-featured">Get started</a>
     </div>
@@ -305,12 +290,7 @@ footer a:hover { color: var(--gold); }
       <div class="pricing-price">$697</div>
       <div class="pricing-period">/ month + $1,997 setup</div>
       <ul class="pricing-features">
-        <li>All 3 agents deployed</li>
-        <li>Full workflow automation</li>
-        <li>Advanced lead scoring</li>
-        <li>Weekly sync call</li>
-        <li>Dedicated Slack channel</li>
-        <li>Quarterly strategy review</li>
+        <li>All 3 agents deployed</li><li>Full workflow automation</li><li>Advanced lead scoring</li><li>Weekly sync call</li><li>Dedicated Slack channel</li><li>Quarterly strategy review</li>
       </ul>
       <a href="#contact" class="btn-outline">Get started</a>
     </div>
@@ -338,405 +318,119 @@ footer a:hover { color: var(--gold); }
 
 <!-- ARIA CHAT WIDGET -->
 <style>
-  .aria-widget * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'DM Sans', sans-serif; }
-
-  .aria-btn {
-    position: fixed;
-    bottom: 28px; right: 28px;
-    width: 60px; height: 60px;
-    border-radius: 50%;
-    background: #0e0e0e;
-    border: none;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 24px rgba(14,14,14,0.25);
-    z-index: 9999;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .aria-btn:hover { transform: scale(1.08); box-shadow: 0 8px 32px rgba(14,14,14,0.3); }
+  .aria-btn { width: 60px; height: 60px; border-radius: 50%; background: #d4c9b8; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 24px rgba(0,0,0,0.4); transition: transform 0.2s, box-shadow 0.2s; }
+  .aria-btn:hover { transform: scale(1.08); box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
   .aria-btn svg { width: 26px; height: 26px; }
   .aria-btn .aria-close { display: none; }
   .aria-btn.open .aria-icon { display: none; }
   .aria-btn.open .aria-close { display: block; }
-
-  .aria-pulse {
-    position: fixed;
-    bottom: 28px; right: 28px;
-    width: 60px; height: 60px;
-    border-radius: 50%;
-    background: rgba(200,169,110,0.3);
-    z-index: 9998;
-    animation: ariaPulse 2.5s ease-out infinite;
-    pointer-events: none;
-  }
-  @keyframes ariaPulse {
-    0% { transform: scale(1); opacity: 0.8; }
-    100% { transform: scale(1.9); opacity: 0; }
-  }
-
-  .aria-window {
-    position: fixed;
-    bottom: 104px; right: 28px;
-    width: 360px;
-    height: 520px;
-    background: #f5f2ec;
-    border-radius: 16px;
-    box-shadow: 0 16px 64px rgba(14,14,14,0.18);
-    z-index: 9999;
-    display: flex; flex-direction: column;
-    overflow: hidden;
-    opacity: 0; pointer-events: none;
-    transform: translateY(16px) scale(0.97);
-    transition: opacity 0.22s, transform 0.22s;
-  }
-  .aria-window.open {
-    opacity: 1; pointer-events: all;
-    transform: translateY(0) scale(1);
-  }
-
-  .aria-header {
-    background: #0e0e0e;
-    padding: 16px 20px;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .aria-avatar {
-    width: 38px; height: 38px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #c8a96e, #8a6a2a);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px; flex-shrink: 0;
-  }
+  .aria-pulse { position: fixed; bottom: 28px; right: 28px; width: 60px; height: 60px; border-radius: 50%; background: rgba(212,201,184,0.3); z-index: 9998; animation: ariaPulse 2.5s ease-out infinite; pointer-events: none; }
+  @keyframes ariaPulse { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(1.9); opacity: 0; } }
+  .aria-window { position: fixed; bottom: 104px; right: 28px; width: 360px; height: 520px; background: #f5f2ec; border-radius: 16px; box-shadow: 0 16px 64px rgba(0,0,0,0.5); z-index: 9999; display: flex; flex-direction: column; overflow: hidden; opacity: 0; pointer-events: none; transform: translateY(16px) scale(0.97); transition: opacity 0.22s, transform 0.22s; }
+  .aria-window.open { opacity: 1; pointer-events: all; transform: translateY(0) scale(1); }
+  .aria-header { background: #0e0e0e; padding: 16px 20px; display: flex; align-items: center; gap: 12px; }
+  .aria-avatar { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #c8a96e, #8a6a2a); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
   .aria-header-info { flex: 1; }
-  .aria-header-name {
-    font-size: 14px; font-weight: 500;
-    color: #f5f2ec; letter-spacing: 0.01em;
-  }
-  .aria-header-status {
-    font-size: 11px; color: rgba(245,242,236,0.5);
-    display: flex; align-items: center; gap: 4px; margin-top: 1px;
-  }
-  .aria-dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: #4caf50;
-    animation: ariaBlink 2s infinite;
-  }
-  @keyframes ariaBlink {
-    0%, 100% { opacity: 1; } 50% { opacity: 0.4; }
-  }
-
-  .aria-messages {
-    flex: 1;
-    overflow-y: auto;
-    padding: 16px;
-    display: flex; flex-direction: column; gap: 10px;
-    scroll-behavior: smooth;
-  }
+  .aria-header-name { font-size: 14px; font-weight: 500; color: #f5f2ec; letter-spacing: 0.01em; }
+  .aria-header-status { font-size: 11px; color: rgba(245,242,236,0.5); display: flex; align-items: center; gap: 4px; margin-top: 1px; }
+  .aria-dot { width: 6px; height: 6px; border-radius: 50%; background: #4caf50; animation: ariaBlink 2s infinite; }
+  @keyframes ariaBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .aria-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; scroll-behavior: smooth; }
   .aria-messages::-webkit-scrollbar { width: 4px; }
-  .aria-messages::-webkit-scrollbar-track { background: transparent; }
   .aria-messages::-webkit-scrollbar-thumb { background: rgba(14,14,14,0.15); border-radius: 2px; }
-
-  .aria-msg {
-    max-width: 82%;
-    padding: 10px 14px;
-    border-radius: 12px;
-    font-size: 13.5px;
-    line-height: 1.55;
-    animation: ariaMsgIn 0.2s ease;
-  }
-  @keyframes ariaMsgIn {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .aria-msg.bot {
-    background: #fff;
-    color: #0e0e0e;
-    border-bottom-left-radius: 4px;
-    align-self: flex-start;
-    border: 0.5px solid rgba(14,14,14,0.08);
-  }
-  .aria-msg.user {
-    background: #0e0e0e;
-    color: #f5f2ec;
-    border-bottom-right-radius: 4px;
-    align-self: flex-end;
-  }
-  .aria-typing {
-    display: flex; gap: 4px; align-items: center;
-    padding: 12px 14px;
-    background: #fff;
-    border-radius: 12px; border-bottom-left-radius: 4px;
-    align-self: flex-start;
-    border: 0.5px solid rgba(14,14,14,0.08);
-  }
-  .aria-typing span {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: #c8a96e;
-    animation: ariaTyping 1.2s infinite;
-  }
+  .aria-msg { max-width: 82%; padding: 10px 14px; border-radius: 12px; font-size: 13.5px; line-height: 1.55; animation: ariaMsgIn 0.2s ease; }
+  @keyframes ariaMsgIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .aria-msg.bot { background: #fff; color: #0e0e0e; border-bottom-left-radius: 4px; align-self: flex-start; border: 0.5px solid rgba(14,14,14,0.08); }
+  .aria-msg.user { background: #0e0e0e; color: #f5f2ec; border-bottom-right-radius: 4px; align-self: flex-end; }
+  .aria-typing { display: flex; gap: 4px; align-items: center; padding: 12px 14px; background: #fff; border-radius: 12px; border-bottom-left-radius: 4px; align-self: flex-start; border: 0.5px solid rgba(14,14,14,0.08); }
+  .aria-typing span { width: 6px; height: 6px; border-radius: 50%; background: #c8a96e; animation: ariaTyping 1.2s infinite; }
   .aria-typing span:nth-child(2) { animation-delay: 0.2s; }
   .aria-typing span:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes ariaTyping {
-    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-    30% { transform: translateY(-5px); opacity: 1; }
-  }
-
-  .aria-footer {
-    padding: 12px 14px;
-    background: #edeae2;
-    border-top: 0.5px solid rgba(14,14,14,0.08);
-    display: flex; gap: 8px; align-items: flex-end;
-  }
-  .aria-input {
-    flex: 1;
-    border: 0.5px solid rgba(14,14,14,0.15);
-    border-radius: 10px;
-    padding: 10px 14px;
-    font-size: 13px;
-    background: #fff;
-    color: #0e0e0e;
-    resize: none;
-    outline: none;
-    max-height: 100px;
-    min-height: 40px;
-    line-height: 1.4;
-    transition: border-color 0.15s;
-    font-family: 'DM Sans', sans-serif;
-  }
+  @keyframes ariaTyping { 0%, 60%, 100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-5px); opacity: 1; } }
+  .aria-footer { padding: 12px 14px; background: #edeae2; border-top: 0.5px solid rgba(14,14,14,0.08); display: flex; gap: 8px; align-items: flex-end; }
+  .aria-input { flex: 1; border: 0.5px solid rgba(14,14,14,0.15); border-radius: 10px; padding: 10px 14px; font-size: 13px; background: #fff; color: #0e0e0e; resize: none; outline: none; max-height: 100px; min-height: 40px; line-height: 1.4; transition: border-color 0.15s; font-family: 'DM Sans', sans-serif; }
   .aria-input:focus { border-color: #c8a96e; }
   .aria-input::placeholder { color: rgba(14,14,14,0.35); }
-  .aria-send {
-    width: 40px; height: 40px;
-    border-radius: 10px;
-    background: #0e0e0e;
-    border: none;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    transition: background 0.15s, transform 0.1s;
-  }
+  .aria-send { width: 40px; height: 40px; border-radius: 10px; background: #0e0e0e; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.15s, transform 0.1s; }
   .aria-send:hover { background: #1a1a2e; transform: scale(1.05); }
   .aria-send:active { transform: scale(0.97); }
   .aria-send svg { width: 16px; height: 16px; }
-
-  .aria-powered {
-    text-align: center;
-    font-size: 10px;
-    color: rgba(14,14,14,0.3);
-    padding: 6px;
-    background: #edeae2;
-    letter-spacing: 0.04em;
-  }
-
-  @media (max-width: 420px) {
-    .aria-window { width: calc(100vw - 24px); right: 12px; bottom: 88px; }
-    .aria-btn { right: 12px; bottom: 12px; }
-    .aria-pulse { right: 12px; bottom: 12px; }
-  }
-/* === SCROLL REVEAL TRANSITIONS === */
-.reveal {
-  opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.4s; }
-.reveal-left {
-  opacity: 0;
-  transform: translateX(-24px);
-  transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
-}
-.reveal-left.visible { opacity: 1; transform: translateX(0); }
-.reveal-right {
-  opacity: 0;
-  transform: translateX(24px);
-  transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
-}
-.reveal-right.visible { opacity: 1; transform: translateX(0); }
+  .aria-powered { text-align: center; font-size: 10px; color: rgba(14,14,14,0.3); padding: 6px; background: #edeae2; letter-spacing: 0.04em; }
+  @media (max-width: 420px) { .aria-window { width: calc(100vw - 24px); right: 12px; bottom: 88px; } .agent-wrapper.aria-wrap { right: 12px; bottom: 12px; } .aria-pulse { right: 12px; bottom: 12px; } }
 </style>
 
-<div class="aria-widget">
-  <div class="aria-pulse" id="ariaPulse"></div>
-
+<div class="aria-pulse" id="ariaPulse"></div>
+<div class="agent-wrapper aria-wrap">
+  <span class="agent-label">Aria</span>
   <button class="aria-btn" id="ariaBtn" onclick="toggleAria()">
-    <svg class="aria-icon" viewBox="0 0 24 24" fill="none" stroke="#f5f2ec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <svg class="aria-icon" viewBox="0 0 24 24" fill="none" stroke="#0e0e0e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
     </svg>
-    <svg class="aria-close" viewBox="0 0 24 24" fill="none" stroke="#f5f2ec" stroke-width="2" stroke-linecap="round">
+    <svg class="aria-close" viewBox="0 0 24 24" fill="none" stroke="#0e0e0e" stroke-width="2" stroke-linecap="round">
       <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
     </svg>
   </button>
+</div>
 
-  <div class="aria-window" id="ariaWindow">
-    <div class="aria-header">
-      <div class="aria-avatar">🤖</div>
-      <div class="aria-header-info">
-        <div class="aria-header-name">Aria — Taskborne AI</div>
-        <div class="aria-header-status">
-          <div class="aria-dot"></div>
-          Online now
-        </div>
-      </div>
+<div class="aria-window" id="ariaWindow">
+  <div class="aria-header">
+    <div class="aria-avatar">🤖</div>
+    <div class="aria-header-info">
+      <div class="aria-header-name">Aria — Taskborne AI</div>
+      <div class="aria-header-status"><div class="aria-dot"></div>Online now</div>
     </div>
-
-    <div class="aria-messages" id="ariaMessages"></div>
-
-    <div class="aria-footer">
-      <textarea class="aria-input" id="ariaInput" placeholder="Type your message..." rows="1"
-        onkeydown="handleAriaKey(event)" oninput="autoResize(this)"></textarea>
-      <button class="aria-send" onclick="sendAriaMessage()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#f5f2ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
-        </svg>
-      </button>
-    </div>
-    <div class="aria-powered">Powered by Taskborne AI</div>
   </div>
+  <div class="aria-messages" id="ariaMessages"></div>
+  <div class="aria-footer">
+    <textarea class="aria-input" id="ariaInput" placeholder="Type your message..." rows="1" onkeydown="handleAriaKey(event)" oninput="autoResize(this)"></textarea>
+    <button class="aria-send" onclick="sendAriaMessage()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#f5f2ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+  <div class="aria-powered">Powered by Taskborne AI</div>
 </div>
 
 <script>
   const ARIA_WEBHOOK = 'https://dumontjv.app.n8n.cloud/webhook/scheduling-agent';
-  let ariaOpen = false;
-  let ariaHistory = [];
+  let ariaOpen = false; let ariaHistory = [];
   let ariaSessionId = 'session_' + Math.random().toString(36).substr(2, 9);
   let ariaStarted = false;
-
   function toggleAria() {
     ariaOpen = !ariaOpen;
     document.getElementById('ariaBtn').classList.toggle('open', ariaOpen);
     document.getElementById('ariaWindow').classList.toggle('open', ariaOpen);
     document.getElementById('ariaPulse').style.display = ariaOpen ? 'none' : 'block';
-    if (ariaOpen && !ariaStarted) {
-      ariaStarted = true;
-      setTimeout(() => addAriaMessage('bot', "Hi there! 👋 I'm Aria, your scheduling assistant.\n\nI can help you book a free 20-minute strategy call with the Taskborne team. Would you like to schedule one?"), 600);
-    }
+    if (ariaOpen && !ariaStarted) { ariaStarted = true; setTimeout(() => addAriaMessage('bot', "Hi there! 👋 I'm Aria, your scheduling assistant.\n\nI can help you book a free 20-minute strategy call with the Taskborne team. Would you like to schedule one?"), 600); }
     if (ariaOpen) setTimeout(() => document.getElementById('ariaInput').focus(), 300);
   }
-
-  function addAriaMessage(type, text) {
-    const msgs = document.getElementById('ariaMessages');
-    const div = document.createElement('div');
-    div.className = 'aria-msg ' + type;
-    div.textContent = text;
-    msgs.appendChild(div);
-    msgs.scrollTop = msgs.scrollHeight;
-    return div;
-  }
-
-  function showTyping() {
-    const msgs = document.getElementById('ariaMessages');
-    const div = document.createElement('div');
-    div.className = 'aria-typing';
-    div.id = 'ariaTyping';
-    div.innerHTML = '<span></span><span></span><span></span>';
-    msgs.appendChild(div);
-    msgs.scrollTop = msgs.scrollHeight;
-  }
-
-  function hideTyping() {
-    const t = document.getElementById('ariaTyping');
-    if (t) t.remove();
-  }
-
+  function addAriaMessage(type, text) { const msgs = document.getElementById('ariaMessages'); const div = document.createElement('div'); div.className = 'aria-msg ' + type; div.textContent = text; msgs.appendChild(div); msgs.scrollTop = msgs.scrollHeight; return div; }
+  function showTyping() { const msgs = document.getElementById('ariaMessages'); const div = document.createElement('div'); div.className = 'aria-typing'; div.id = 'ariaTyping'; div.innerHTML = '<span></span><span></span><span></span>'; msgs.appendChild(div); msgs.scrollTop = msgs.scrollHeight; }
+  function hideTyping() { const t = document.getElementById('ariaTyping'); if (t) t.remove(); }
   async function sendAriaMessage() {
-    const input = document.getElementById('ariaInput');
-    const text = input.value.trim();
-    if (!text) return;
-
-    addAriaMessage('user', text);
-    input.value = '';
-    input.style.height = 'auto';
-    showTyping();
-
+    const input = document.getElementById('ariaInput'); const text = input.value.trim(); if (!text) return;
+    addAriaMessage('user', text); input.value = ''; input.style.height = 'auto'; showTyping();
     ariaHistory.push({ role: 'user', content: text });
-
     try {
-      const res = await fetch(ARIA_WEBHOOK, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          sessionId: ariaSessionId,
-          message: text,
-          name: 'Visitor',
-          history: ariaHistory
-        })
-      });
-
-      const data = await res.json();
-      hideTyping();
-
+      const res = await fetch(ARIA_WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ sessionId: ariaSessionId, message: text, name: 'Visitor', history: ariaHistory }) });
+      const data = await res.json(); hideTyping();
       const reply = data.response || "I'm here to help! Could you tell me a bit more?";
-      addAriaMessage('bot', reply);
-      ariaHistory.push({ role: 'assistant', content: reply });
-
-    } catch (e) {
-      hideTyping();
-      addAriaMessage('bot', "Sorry, I'm having a connection issue. Please try again in a moment!");
-    }
+      addAriaMessage('bot', reply); ariaHistory.push({ role: 'assistant', content: reply });
+    } catch (e) { hideTyping(); addAriaMessage('bot', "Sorry, I'm having a connection issue. Please try again in a moment!"); }
   }
-
-  function handleAriaKey(e) {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      sendAriaMessage();
-    }
-  }
-
-  function autoResize(el) {
-    el.style.height = 'auto';
-    el.style.height = Math.min(el.scrollHeight, 100) + 'px';
-  }
-
-  // Stop pulse after 8s
-  setTimeout(() => {
-    const p = document.getElementById('ariaPulse');
-    if (p) p.style.display = 'none';
-  }, 8000);
+  function handleAriaKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendAriaMessage(); } }
+  function autoResize(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 100) + 'px'; }
+  setTimeout(() => { const p = document.getElementById('ariaPulse'); if (p) p.style.display = 'none'; }, 8000);
 </script>
 
-
-<script>
-// Scroll reveal with IntersectionObserver
-(function() {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, {
-    threshold: 0.12,
-    rootMargin: '0px 0px -40px 0px'
-  });
-
-  // Observe all reveal elements
-  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
-    observer.observe(el);
-  });
-
-  // Hero elements visible immediately on load
-  window.addEventListener('load', () => {
-    document.querySelectorAll('.hero .reveal-left, .hero .reveal-right').forEach(el => {
-      setTimeout(() => el.classList.add('visible'), 100);
-    });
-  });
-})();
-</script>
-<!-- SUPPORT AGENT WIDGET -->
+<!-- NOVA SUPPORT WIDGET -->
 <style>
-  .nova-btn { position: fixed; bottom: 28px; right: 104px; width: 60px; height: 60px; border-radius: 50%; background: #1a1a2e; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 24px rgba(14,14,14,0.25); z-index: 9999; transition: transform 0.2s, box-shadow 0.2s; }
-  .nova-btn:hover { transform: scale(1.08); box-shadow: 0 8px 32px rgba(14,14,14,0.3); }
+  .nova-btn { width: 60px; height: 60px; border-radius: 50%; background: #f5f2ec; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 24px rgba(0,0,0,0.4); transition: transform 0.2s, box-shadow 0.2s; }
+  .nova-btn:hover { transform: scale(1.08); box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
   .nova-btn svg { width: 26px; height: 26px; }
   .nova-btn .nova-close { display: none; }
   .nova-btn.open .nova-icon { display: none; }
   .nova-btn.open .nova-close { display: block; }
-  .nova-window { position: fixed; bottom: 104px; right: 104px; width: 360px; height: 520px; background: #f5f2ec; border-radius: 16px; box-shadow: 0 16px 64px rgba(14,14,14,0.18); z-index: 9999; display: flex; flex-direction: column; overflow: hidden; opacity: 0; pointer-events: none; transform: translateY(16px) scale(0.97); transition: opacity 0.22s, transform 0.22s; }
+  .nova-window { position: fixed; bottom: 104px; right: 104px; width: 360px; height: 520px; background: #f5f2ec; border-radius: 16px; box-shadow: 0 16px 64px rgba(0,0,0,0.5); z-index: 9999; display: flex; flex-direction: column; overflow: hidden; opacity: 0; pointer-events: none; transform: translateY(16px) scale(0.97); transition: opacity 0.22s, transform 0.22s; }
   .nova-window.open { opacity: 1; pointer-events: all; transform: translateY(0) scale(1); }
   .nova-header { background: #1a1a2e; padding: 16px 20px; display: flex; align-items: center; gap: 12px; }
   .nova-avatar { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #4a90d9, #1a3a6e); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
@@ -766,28 +460,30 @@ footer a:hover { color: var(--gold); }
   .nova-send:active { transform: scale(0.97); }
   .nova-send svg { width: 16px; height: 16px; }
   .nova-powered { text-align: center; font-size: 10px; color: rgba(14,14,14,0.3); padding: 6px; background: #edeae2; letter-spacing: 0.04em; }
-  @media (max-width: 420px) { .nova-window { width: calc(100vw - 24px); right: 12px; bottom: 88px; } .nova-btn { right: 84px; bottom: 12px; } }
+  @media (max-width: 420px) { .nova-window { width: calc(100vw - 24px); right: 12px; bottom: 88px; } .agent-wrapper.nova-wrap { right: 84px; bottom: 12px; } }
 </style>
-<div class="nova-widget">
+
+<div class="agent-wrapper nova-wrap">
+  <span class="agent-label">Nova</span>
   <button class="nova-btn" id="novaBtn" onclick="toggleNova()">
-    <svg class="nova-icon" viewBox="0 0 24 24" fill="none" stroke="#f5f2ec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-    <svg class="nova-close" viewBox="0 0 24 24" fill="none" stroke="#f5f2ec" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    <svg class="nova-icon" viewBox="0 0 24 24" fill="none" stroke="#0e0e0e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    <svg class="nova-close" viewBox="0 0 24 24" fill="none" stroke="#0e0e0e" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
   </button>
-  <div class="nova-window" id="novaWindow">
-    <div class="nova-header">
-      <div class="nova-avatar">💬</div>
-      <div class="nova-header-info">
-        <div class="nova-header-name">Nova — Support AI</div>
-        <div class="nova-header-status"><div class="nova-dot"></div>Always available</div>
-      </div>
+</div>
+<div class="nova-window" id="novaWindow">
+  <div class="nova-header">
+    <div class="nova-avatar">💬</div>
+    <div class="nova-header-info">
+      <div class="nova-header-name">Nova — Support AI</div>
+      <div class="nova-header-status"><div class="nova-dot"></div>Always available</div>
     </div>
-    <div class="nova-messages" id="novaMessages"></div>
-    <div class="nova-footer">
-      <textarea class="nova-input" id="novaInput" placeholder="Ask me anything..." rows="1" onkeydown="handleNovaKey(event)" oninput="novaResize(this)"></textarea>
-      <button class="nova-send" onclick="sendNovaMessage()"><svg viewBox="0 0 24 24" fill="none" stroke="#f5f2ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
-    </div>
-    <div class="nova-powered">Powered by Taskborne AI</div>
   </div>
+  <div class="nova-messages" id="novaMessages"></div>
+  <div class="nova-footer">
+    <textarea class="nova-input" id="novaInput" placeholder="Ask me anything..." rows="1" onkeydown="handleNovaKey(event)" oninput="novaResize(this)"></textarea>
+    <button class="nova-send" onclick="sendNovaMessage()"><svg viewBox="0 0 24 24" fill="none" stroke="#f5f2ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+  </div>
+  <div class="nova-powered">Powered by Taskborne AI</div>
 </div>
 <script>
   const NOVA_WEBHOOK = 'https://dumontjv.app.n8n.cloud/webhook/support-agent';
@@ -817,15 +513,16 @@ footer a:hover { color: var(--gold); }
   function handleNovaKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendNovaMessage(); } }
   function novaResize(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 100) + 'px'; }
 </script>
-  <!-- LEAD QUALIFICATION WIDGET -->
+
+<!-- REX LEAD WIDGET -->
 <style>
-  .rex-btn { position: fixed; bottom: 28px; right: 180px; width: 60px; height: 60px; border-radius: 50%; background: #1a2e1a; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 24px rgba(14,14,14,0.25); z-index: 9999; transition: transform 0.2s, box-shadow 0.2s; }
-  .rex-btn:hover { transform: scale(1.08); box-shadow: 0 8px 32px rgba(14,14,14,0.3); }
+  .rex-btn { width: 60px; height: 60px; border-radius: 50%; background: #c8a96e; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 24px rgba(0,0,0,0.4); transition: transform 0.2s, box-shadow 0.2s; }
+  .rex-btn:hover { transform: scale(1.08); box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
   .rex-btn svg { width: 26px; height: 26px; }
   .rex-btn .rex-close { display: none; }
   .rex-btn.open .rex-icon { display: none; }
   .rex-btn.open .rex-close { display: block; }
-  .rex-window { position: fixed; bottom: 104px; right: 180px; width: 360px; height: 520px; background: #f5f2ec; border-radius: 16px; box-shadow: 0 16px 64px rgba(14,14,14,0.18); z-index: 9999; display: flex; flex-direction: column; overflow: hidden; opacity: 0; pointer-events: none; transform: translateY(16px) scale(0.97); transition: opacity 0.22s, transform 0.22s; }
+  .rex-window { position: fixed; bottom: 104px; right: 180px; width: 360px; height: 520px; background: #f5f2ec; border-radius: 16px; box-shadow: 0 16px 64px rgba(0,0,0,0.5); z-index: 9999; display: flex; flex-direction: column; overflow: hidden; opacity: 0; pointer-events: none; transform: translateY(16px) scale(0.97); transition: opacity 0.22s, transform 0.22s; }
   .rex-window.open { opacity: 1; pointer-events: all; transform: translateY(0) scale(1); }
   .rex-header { background: #1a2e1a; padding: 16px 20px; display: flex; align-items: center; gap: 12px; }
   .rex-avatar { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #4a9d4a, #1a5e1a); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
@@ -842,41 +539,43 @@ footer a:hover { color: var(--gold); }
   .rex-msg.bot { background: #fff; color: #0e0e0e; border-bottom-left-radius: 4px; align-self: flex-start; border: 0.5px solid rgba(14,14,14,0.08); }
   .rex-msg.user { background: #1a2e1a; color: #f5f2ec; border-bottom-right-radius: 4px; align-self: flex-end; }
   .rex-typing { display: flex; gap: 4px; align-items: center; padding: 12px 14px; background: #fff; border-radius: 12px; border-bottom-left-radius: 4px; align-self: flex-start; border: 0.5px solid rgba(14,14,14,0.08); }
-  .rex-typing span { width: 6px; height: 6px; border-radius: 50%; background: #4a9d4a; animation: rexTyping 1.2s infinite; }
+  .rex-typing span { width: 6px; height: 6px; border-radius: 50%; background: #c8a96e; animation: rexTyping 1.2s infinite; }
   .rex-typing span:nth-child(2) { animation-delay: 0.2s; }
   .rex-typing span:nth-child(3) { animation-delay: 0.4s; }
   @keyframes rexTyping { 0%, 60%, 100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-5px); opacity: 1; } }
   .rex-footer { padding: 12px 14px; background: #edeae2; border-top: 0.5px solid rgba(14,14,14,0.08); display: flex; gap: 8px; align-items: flex-end; }
   .rex-input { flex: 1; border: 0.5px solid rgba(14,14,14,0.15); border-radius: 10px; padding: 10px 14px; font-size: 13px; background: #fff; color: #0e0e0e; resize: none; outline: none; max-height: 100px; min-height: 40px; line-height: 1.4; transition: border-color 0.15s; font-family: 'DM Sans', sans-serif; }
-  .rex-input:focus { border-color: #4a9d4a; }
+  .rex-input:focus { border-color: #c8a96e; }
   .rex-input::placeholder { color: rgba(14,14,14,0.35); }
   .rex-send { width: 40px; height: 40px; border-radius: 10px; background: #1a2e1a; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.15s, transform 0.1s; }
   .rex-send:hover { background: #0e0e0e; transform: scale(1.05); }
   .rex-send:active { transform: scale(0.97); }
   .rex-send svg { width: 16px; height: 16px; }
   .rex-powered { text-align: center; font-size: 10px; color: rgba(14,14,14,0.3); padding: 6px; background: #edeae2; letter-spacing: 0.04em; }
-  @media (max-width: 420px) { .rex-window { width: calc(100vw - 24px); right: 12px; bottom: 88px; } .rex-btn { right: 156px; bottom: 12px; } }
+  @media (max-width: 420px) { .rex-window { width: calc(100vw - 24px); right: 12px; bottom: 88px; } .agent-wrapper.rex-wrap { right: 156px; bottom: 12px; } }
 </style>
-<div class="rex-widget">
+
+<div class="agent-wrapper rex-wrap">
+  <span class="agent-label">Rex</span>
   <button class="rex-btn" id="rexBtn" onclick="toggleRex()">
-    <svg class="rex-icon" viewBox="0 0 24 24" fill="none" stroke="#f5f2ec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-    <svg class="rex-close" viewBox="0 0 24 24" fill="none" stroke="#f5f2ec" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    <svg class="rex-icon" viewBox="0 0 24 24" fill="none" stroke="#0e0e0e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+    <svg class="rex-close" viewBox="0 0 24 24" fill="none" stroke="#0e0e0e" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
   </button>
-  <div class="rex-window" id="rexWindow">
-    <div class="rex-header">
-      <div class="rex-avatar">🎯</div>
-      <div class="rex-header-info">
-        <div class="rex-header-name">Rex — Sales AI</div>
-        <div class="rex-header-status"><div class="rex-dot"></div>Ready to help</div>
-      </div>
+</div>
+<div class="rex-window" id="rexWindow">
+  <div class="rex-header">
+    <div class="rex-avatar">🎯</div>
+    <div class="rex-header-info">
+      <div class="rex-header-name">Rex — Sales AI</div>
+      <div class="rex-header-status"><div class="rex-dot"></div>Ready to help</div>
     </div>
-    <div class="rex-messages" id="rexMessages"></div>
-    <div class="rex-footer">
-      <textarea class="rex-input" id="rexInput" placeholder="Tell me about your business..." rows="1" onkeydown="handleRexKey(event)" oninput="rexResize(this)"></textarea>
-      <button class="rex-send" onclick="sendRexMessage()"><svg viewBox="0 0 24 24" fill="none" stroke="#f5f2ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
-    </div>
-    <div class="rex-powered">Powered by Taskborne AI</div>
   </div>
+  <div class="rex-messages" id="rexMessages"></div>
+  <div class="rex-footer">
+    <textarea class="rex-input" id="rexInput" placeholder="Tell me about your business..." rows="1" onkeydown="handleRexKey(event)" oninput="rexResize(this)"></textarea>
+    <button class="rex-send" onclick="sendRexMessage()"><svg viewBox="0 0 24 24" fill="none" stroke="#f5f2ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+  </div>
+  <div class="rex-powered">Powered by Taskborne AI</div>
 </div>
 <script>
   const REX_WEBHOOK = 'https://dumontjv.app.n8n.cloud/webhook/lead-agent';
@@ -905,6 +604,22 @@ footer a:hover { color: var(--gold); }
   }
   function handleRexKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendRexMessage(); } }
   function rexResize(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 100) + 'px'; }
+</script>
+
+<script>
+(function() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+  window.addEventListener('load', () => {
+    document.querySelectorAll('.hero .reveal-left, .hero .reveal-right').forEach(el => {
+      setTimeout(() => el.classList.add('visible'), 100);
+    });
+  });
+})();
 </script>
 </body>
 </html>
